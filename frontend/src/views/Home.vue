@@ -1,17 +1,20 @@
 <template>
-  <div>
-    <LoginCard/>
-  </div>
+    <div class="container">
+        <div>
+        <button type="button" class="btn  bg-light btn-block mb-4" v-on:click="goLogin()">Sign in</button>
+        </div>
+    </div>
 </template>
-
 <script>
-// @ is an alias to /src
-import LoginCard from '../components/LoginCard.vue'
-
 export default {
   name: 'Home',
-  components: {
-    LoginCard
+  props: {
+  },
+  methods:
+  {
+      goLogin(){
+    this.$router.push('/login'); 
+      }
   }
 }
 </script>

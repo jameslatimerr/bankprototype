@@ -2,20 +2,25 @@
 <div class="d-flex justify-content-center p-5">
 <div class="card" style="width: 25rem;">
     <div class="container p-2">
-        <h3>Login</h3>
+        <h3>Register</h3>
     </div>
     <form>
   <!-- Email input -->
-  <div class="form-outline p-4">
+  <div class="form-outline needs-validation p-4">
     <input type="email" id="form2Example1" class="form-control" v-model="this.user"/>
     <label class="form-label" for="form2Example1">Email address</label>
   </div>
 
   <!-- Password input -->
-  <div class="form-outline mb-4 p-4">
+  <div class="form-outline needs-validation p-4">
     <input type="password" id="form2Example2" class="form-control" v-model="this.pass" />
     <label class="form-label" for="form2Example2">Password</label>
   </div>
+  <div class="form-outline mb-4 needs-validation p-4">
+    <input type="password" id="form2Example2" class="form-control" v-model="this.confirm_pass" />
+    <label class="form-label" for="form2Example2">Confirm Password</label>
+  </div>
+
 
   <!-- 2 column grid layout for inline styling -->
   <div class="row mb-4">
@@ -26,19 +31,13 @@
         <label class="form-check-label" for="form2Example31"> Remember me </label>
       </div>
     </div>
-
-    <div class="col">
-      <!-- Simple link -->
-      <a href="#!">Forgot password?</a>
     </div>
-  </div>
-
   <!-- Submit button -->
-  <button type="button" class="btn btn-block mb-4" v-on:click="handleSubmit()">Sign in</button>
+  <button type="button" class="btn btn-block mb-4" v-on:click="$router.go()">Sign in</button>
 
   <!-- Register buttons -->
   <div class="text-center">
-    <a> Not a member?</a> <button class="btn btn-block mb-3" v-on:click="goRegister()">Register</button>
+    <p>Already a member? </p> <button class="btn bg-light">v-on:click="goTo()">Sign in<button/>
   </div>
 </form>
 </div>
@@ -47,50 +46,29 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'LoginCard',
+  name: 'RegisterCard',
   props: {
   },
   data (){
       return{
           user : "",
           pass : "",
-          users : [],
-          flag: false
+          confirm_pass : ""
       }
-  },
-  async created () {
-    try {
-      const res = await axios.get('http://localhost:3000/users')
-
-      this.users = res.data
-    } catch (e) {
-        console.log
-    }
-  },
+      },
   methods: {
-      goRegister(){
-        this.$router.push('/register')
+      goTo(){
+          // this.$router.push('/'); 
+          this.$router.push('/login'); 
       },
       handleSubmit() {
-        const data = {user: this.user, pass: this.pass}
 
         //   const formData = {
         //       email: this.user,
         //       pass: this.pass
         //   }
-        var x= this.users
-        var len = x.length;
-        for(var i = 0; i < len; i++){
-            console.log(JSON.stringify(x[i]))
-            console.log(JSON.stringify(data))
-            if(JSON.stringify(data) == JSON.stringify(x[i])){
-                console.log("yes");
-                this.flag = true;
-                this.$router.push('/main'); 
-            }
-            
-        }
-          console.log(this.users)
+        axios.post('http://localhost:3001/users', {first: this.new_first, last: this.new_pass})
+
       }
 
       
